@@ -5,6 +5,8 @@ import Calc from "./components/Calc";
 import Grade from "./components/Grade";
 import Home from "./pages/Home";
 import Login from "./components/Login";
+import Counter from "./components/Counter";
+
 
 export default function App () {
     return useRoutes([
@@ -13,5 +15,7 @@ export default function App () {
         { path: "calc", element: <Calc/>},
         { path: "grade", element: <Grade/>},
         { path: "login", element: <Login/>},
+        { path: "counter", element: <Counter/>}
+        
     ]);
 }

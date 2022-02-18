@@ -14,6 +14,9 @@ export default function Footer (){
                 </div>
                 </div>
                 </div>
+                <div>
+                <img src="https://img.chuing.net/i/eGJuGHH/2.png" alt="logo"/>
+                </div>
 
     </div>)
         
