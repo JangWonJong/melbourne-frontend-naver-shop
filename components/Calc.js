@@ -1,45 +1,49 @@
 import React, { useState }  from "react"
+import { memberCalc } from "../api";
 import Layout from "../containers/Layout"
 
 export default function Calc (){
-    const [num1, setNum1] = useState(0)
-    const [num2, setNum2] = useState(0)
-    const [opcode, setOpcode] = useState("")
-    const [result, setResult] = useState(0)
-    
-    const sum = () => {
-        let num1 = document.getElementById('num1').value
-        console.log('숫자 1 : '+ num1)
-        let num2 = document.getElementById('num2').value      
-        console.log('숫자 1 : '+ num2)
-        setNum1(num1)
-        setNum2(num2)
-        setResult (Number(num1) + Number(num2))
-        console.log('결과 : '+result)
+
+    const [inputs, setInputs] = useState({})
+    const [result, setReult] = useState('')
+    const {num1,  opcode, num2} = inputs;
+
+    const handleChange = (e)=>{
+        e.preventDefault()
+        const {value, name} = e.target;
+        setInputs({
+            ...inputs, [name]: value
+        })
     }
+    const handleClick =(e) =>{
+        e.preventDefault()
+        memberCalc({num1, opcode, num2}).then(res => setReult(res.data)).catch( err => console.log(`에러발생 : ${err}`))
     
+    }  
+        
     return<Layout><h1>계산기</h1>
         <form action="">
-                <div>
+                
                     <label htmlFor=""><b>num1</b></label><br/>               
-                    <input id ="num1" type="" /><br/>
+                    <input name="num1" type="text" onChange={handleChange} /><br/> 
 
                     <label htmlFor=""><b>opcode</b></label><br/>
-                    <select name="" id="">
-                        <option value="">+</option>
-                        <option value="">-</option>
-                        <option value="">*</option>
-                        <option value="">/</option>
-                        <option value="">%</option>
+                    <select name="opcode" id="" onChange={handleChange}>
+                        <option value="+">+</option>
+                        <option value="-">-</option>
+                        <option value="*">*</option>
+                        <option value="/">/</option>
+                        <option value="%">%</option>
                     </select><br/>
+                    
                     <label htmlFor=""><b>num2</b></label><br/>
-                    <input id ="num2" type="" /><br/></div>
+                    <input name="num2" type="text" onChange={handleChange} /><br/> 
 
-                    <button onClick={()=>{sum()}}>opcode실행</button><br/>
-                
-        </form>
-                    <div>결과:{num1} + {num2} = {result} </div>                 
-                   
+                    <button onClick={handleClick}>전 송</button><br/>
+                    <div>계산 결과: {result} </div>
+                    </form>
+                                     
+                           
             
     
     </Layout>

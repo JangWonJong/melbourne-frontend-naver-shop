@@ -1,13 +1,24 @@
 import React, { useState }  from "react";
+import { memberGrade } from "../api";
 import Layout from "../containers/Layout";
 
 export default function Grade (){
-    const [name, setName] = useState("")
-    const [kor, setKor] = useState(0)
-    const [eng, setEng] = useState(0)    
-    const [math, setMath] = useState(0)
+    const [inputs, setInputs] = useState({})
+    const {name, kor, eng, math} = inputs;
+
+    const handleChange = (e) =>{
+        e.preventDefault()
+        const {value, name} = e.target;
+        setInputs({...inputs, [name]: value})
+    }
+    const handleClick = (e) => {
+        e.preventDefault()
+        const gradeRequest = {name, kor, eng, math}
+        memberGrade(gradeRequest).then(res=>{alert(res.data)})
+        .catch(err => console.log(`에러발생 : ${err}`))
+    }
     
-    const result =() => {
+    /**const result =() => {
         let name = document.getElementById('name').value
         let kor = document.getElementById('kor').value
         let eng = document.getElementById('eng').value
@@ -17,7 +28,7 @@ export default function Grade (){
         setKor(kor)
         setMath(math)
 
-    }
+    }*/
 
     return <Layout><h1>성적표</h1>
             
@@ -25,15 +36,15 @@ export default function Grade (){
                  </div>
                  <div>
                   <label htmlFor=""><b>이름</b></label><br/>   
-                  <input id = 'name' type="text" /><br/>
+                  <input name = 'name' type="text" onChange={handleChange} /><br/>
                   <label htmlFor=""><b>언어점수</b></label><br/>
-                  <input id = 'kor' type="text" /><br/>
+                  <input name = 'kor' type="text" onChange={handleChange}/><br/>
                   <label htmlFor=""><b>영어점수</b></label><br/>
-                  <input id = 'eng' type="text" /><br/>
+                  <input name = 'eng' type="text" onChange={handleChange}/><br/>
                   <label htmlFor=""><b>수학점수</b></label><br/>
-                  <input id = 'math' type="text" /><br/>
+                  <input name = 'math' type="text" onChange={handleChange}/><br/>
                   
-                  <button onClick={()=>{result()}}>성적 결과</button>
+                  <button onClick={handleClick}>성적 결과</button>
                   <div>{name} {kor},{eng},{math}</div>            
         </div>    
     
