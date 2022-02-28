@@ -5,7 +5,7 @@ import Layout from '../containers/Layout'
 export default function Login () {
   
     const [inputs, setInputs] = useState({})
-    const {name, pw} = inputs;
+    const {id, pw} = inputs;
 
     const handleChange =(e)=>{
         e.preventDefault()
@@ -15,12 +15,12 @@ export default function Login () {
     }
     const handleClick =(e)=> {
         e.preventDefault()
-        const loginRequest = {name, pw}
+        const loginRequest = {id, pw}
         memberLogin(loginRequest)
         .then(res => {
             alert(res.data)
         })
-        .catch(err => console.  log(`에러발생 : ${err}`))
+        .catch(err => console.log(`에러발생 : ${err}`))
     }
     
     return <Layout><h1>로그인폼</h1>
@@ -29,7 +29,7 @@ export default function Login () {
                 </div>
                 <div>
                     <label htmlFor=""><b>Username</b></label><br/>
-                    <input name='name' type="text" placeholder='아이디' onChange={handleChange}/><br/>
+                    <input name='id' type="text" placeholder='아이디' onChange={handleChange}/><br/>
                     <label htmlFor=""><b>Password</b></label><br/>
                     <input name ='pw' type="password" placeholder='비밀번호' onChange={handleChange}/><br/>
                     
